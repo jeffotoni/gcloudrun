@@ -117,3 +117,47 @@ default ✓ [======================================] 100 VUs  30s
      vus_max....................: 100     min=100        max=100
 
 ```
+
+## Cloud Run
+
+Antes de iniciar ative as APIs Cloud Build, Cloud Run, Container Registry, e Resource Manager.
+
+Existe a possibilidade de criar, listar, deletar o serviço Cloud Run sem precisar ir na interface web.
+Outro ponto legal é quando utiliza o Code Build, você poderá configura-lo manualmente ou na interface Web, integrando com seu github, gitbucket e Resource Manager.
+
+Outro ponto legal é que manualmente vc tem como criar seu deploy criando um arquivo cloudbuild.yaml.
+
+**Exemplo:**
+```bash
+ steps:
+ # Build the container image
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['build', '-t', 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA', '.']
+ # Push the container image to Container Registry
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['push', 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA']
+ # Deploy container image to Cloud Run
+ - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+   entrypoint: gcloud
+   args:
+   - 'run'
+   - 'deploy'
+   - 'SERVICE-NAME'
+   - '--image'
+   - 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA'
+   - '--region'
+   - 'REGION'
+ images:
+ - 'gcr.io/$PROJECT_ID/SERVICE-NAME:$COMMIT_SHA'
+```
+Para executar nosso exemplo basta rodar o exemplo logo abaixo.
+```bash
+$  gcloud builds submit
+```
+
+```bash
+$ gcloud run deploy <service-name> --image <image_name>
+```
+```bash
+$ gcloud run deploy <service-name> --image <image_name>
+```
