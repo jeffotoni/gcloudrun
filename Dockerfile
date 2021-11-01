@@ -19,5 +19,5 @@ RUN apk del --no-cache upx
 
 FROM scratch
 COPY --from=builder2 /go/bin/gcloudrun.user /
-EXPOSE 8081
+EXPOSE 8080
 ENTRYPOINT ["/gcloudrun.user"]

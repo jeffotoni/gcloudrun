@@ -27,7 +27,7 @@ func main() {
 
 	app.Get("/api/v1/ping", Ping)
 	app.Post("/api/v1/user", User)
-	app.Listen(":8080")
+	app.Listen("0.0.0.0:8080")
 }
 
 func Ping(c *fiber.Ctx) error {
