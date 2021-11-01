@@ -1,6 +1,11 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"os"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+)
 
 type userPost struct {
 	Name string `json:"name"`
@@ -9,7 +14,17 @@ type userPost struct {
 }
 
 func main() {
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		Concurrency: 262144,
+		BodyLimit:   1 * 1024 * 1024,
+	})
+
+	app.Use(logger.New(logger.Config{
+		Format:     "${pid} ${time} ${method} ${path} - ${ip} - ${status} - ${latency}\n",
+		TimeFormat: "02-Jan-2006 15:04:05",
+		Output:     os.Stdout,
+	}))
+
 	app.Get("/api/v1/ping", Ping)
 	app.Post("/api/v1/user", User)
 	app.Listen(":8080")
