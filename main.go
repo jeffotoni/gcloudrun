@@ -32,7 +32,7 @@ func main() {
 
 func Ping(c *fiber.Ctx) error {
 	c.Set("Content-Type", "application/json")
-	return c.Status(200).SendString(`{"msg":"pong"}`)
+	return c.Status(200).SendString(`{"msg":"pong❤️"}`)
 }
 
 func User(c *fiber.Ctx) (err error) {
