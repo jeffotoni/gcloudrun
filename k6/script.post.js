@@ -21,14 +21,16 @@ export let options = {
 };
 
 export default function () {
-  var url = `http://localhost:8080/api/v1/user`;
+  var host = __ENV.HOST;
+  if (host.length == 0) {
+    host = "http://localhost:8080";
+  }
+  var url = host+`/api/v1/user`;  
   var params = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  //console.log(JSON.stringify(payload))
-  //return
   http.post(url,  JSON.stringify(payload), params);
 }
 

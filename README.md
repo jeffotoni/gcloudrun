@@ -5,7 +5,13 @@ O objetivo é testar e levantar as possibilidades quando utilziamos este serviç
 
 Antes de iniciar lembra-lo que para fucionar precisaremos autenticar no google cloud com o seguinte comando.
 
-### Àuth Login
+O exemplo abaixo é fazendo push e build direto de sua máquina local e enviando para Registry.
+Logo abaixo iremos fazer também utilizando Code Build + github.
+
+
+## Registry + Docker
+
+### Auth Login
 ```bash
 $ gcloud auth login
 ```
@@ -82,4 +88,32 @@ localhost:8080//api/v1/ping
 ```bash
 $ curl -i -XGET -H "Content-type:application/json" \
 localhost:8080//api/v1/user -d '{"name":"jefferson","cpf":"23232323", "year":2021}'
+```
+
+### K6 Test de Stress
+
+Foi criado test de stress utilizando K6, você poderá rodar ele utilizando docker ou instalar em sua máquina e rodar.
+
+```bash
+$ cd k6
+$ k6 run -e HOST=http://localhost:8080 --vus 100 --duration 30s script.post.js
+running (0m30.0s), 000/100 VUs, 1103723 complete and 0 interrupted iterations
+default ✓ [======================================] 100 VUs  30s
+
+     data_received..............: 227 MB  7.6 MB/s
+     data_sent..................: 400 MB  13 MB/s
+     http_req_blocked...........: avg=3.96µs  min=671ns    med=1.5µs   max=36.49ms p(95)=2.71µs  p(99)=7.08µs   p(99.99)=5.91ms   count=1103723
+     http_req_connecting........: avg=432ns   min=0s       med=0s      max=26.12ms p(95)=0s      p(99)=0s       p(99.99)=0s       count=1103723
+   ✓ http_req_duration..........: avg=2.29ms  min=40.61µs  med=1.38ms  max=45.86ms p(95)=7.41ms  p(99)=14.55ms  p(99.99)=33.12ms  count=1103723
+     http_req_failed............: 100.00% ✓ 1103723      ✗ 0    
+     http_req_receiving.........: avg=58.24µs min=4.46µs   med=14.92µs max=31.07ms p(95)=71.64µs p(99)=391.59µs p(99.99)=16.12ms  count=1103723
+     http_req_sending...........: avg=20.12µs min=3.91µs   med=8.84µs  max=31.15ms p(95)=19.8µs  p(99)=132.44µs p(99.99)=13.62ms  count=1103723
+     http_req_tls_handshaking...: avg=0s      min=0s       med=0s      max=0s      p(95)=0s      p(99)=0s       p(99.99)=0s       count=1103723
+     http_req_waiting...........: avg=2.21ms  min=23.78µs  med=1.34ms  max=43.41ms p(95)=7.25ms  p(99)=13.69ms  p(99.99)=27.43ms  count=1103723
+     http_reqs..................: 1103723 36783.164776/s
+     iteration_duration.........: avg=2.69ms  min=114.41µs med=1.6ms   max=132.9ms p(95)=8.48ms  p(99)=16.6ms   p(99.99)=118.67ms count=1103723
+     iterations.................: 1103723 36783.164776/s
+     vus........................: 100     min=100        max=100
+     vus_max....................: 100     min=100        max=100
+
 ```

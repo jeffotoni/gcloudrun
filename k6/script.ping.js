@@ -9,7 +9,11 @@ export let options = {
 };
 
 export default function () {
-  var url2 = `http://localhost:8080/api/v1/ping`;
-  http.get(url2,{ headers: headers });
+  var host = __ENV.HOST;
+  if (host.length == 0) {
+    host = "http://localhost:8080";
+  }
+  var url = host+`/api/v1/ping`;
+  http.get(url,{ headers: headers });
 }
 
