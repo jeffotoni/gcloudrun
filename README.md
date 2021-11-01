@@ -156,8 +156,9 @@ $  gcloud builds submit
 ```
 
 ```bash
-$ gcloud run deploy <service-name> --image <image_name>
+$ gcloud run deploy --help
 ```
 ```bash
 $ gcloud run deploy <service-name> --image <image_name>
 ```
+![Browser](cloudrun.png)
