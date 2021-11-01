@@ -57,7 +57,7 @@ $ docker docker build -f Dockerfile -t jeffotoni/gcloudrun.user .
 
 Agora vamos subir nosso serviço usando docker.
 ```bash
-$ docker run --name gcloudrun.user --rm jeffotoni/gcloudrun.userlatest -p 8080:8080
+$ docker run --rm --name gcloudrun.user -it -p 8080:8080 jeffotoni/gcloudrun.user:latest
 ┌───────────────────────────────────────────────────┐ 
 │                   Fiber v2.21.0                   │ 
 │               http://127.0.0.1:8080               │ 
